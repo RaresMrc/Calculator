@@ -1,0 +1,63 @@
+body {
+    background: #171616;
+}
+
+#output {
+    position: relative;
+    color: white;
+    padding-left: 40%;
+}
+
+.grid-container {
+    display: flex;
+    position: static;
+    padding-left: 40%;
+    padding-top: 10%;
+}
+
+.button-grid {
+    display: grid;
+    padding-left: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    width: 170px;
+    height: 230px;
+    gap: 10px 10px;
+}
+
+.button-grid button {
+    border-width: 2px;
+    border-color: purple;
+    background: black;
+    color: whitesmoke;
+}
+
+.operation-grid {
+    display : grid;
+    padding-left: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    width: 110px;
+    height: 170px;
+    gap: 10px 10px;
+}
+
+.operation-grid button {
+    border-width: 2px;
+    border-color: purple;
+    background: black;
+    color: whitesmoke;
+}
+
+.special-operations {
+    display : grid;
+    width: 110px;
+    height: 110px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 10px;
+}
+
+.special-operations button {
+    border-width: 2px;
+    border-color: purple;
+    background: black;
+    color: whitesmoke;
+}

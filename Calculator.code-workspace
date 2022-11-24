@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "/media/rares/Casual_Use1/Projects/Calculator"
+		},
+		{
+			"path": "../Site"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Calculator"
+	}
+}
