@@ -24,6 +24,7 @@ function charCount(str, char) {
     for (c of str) {
         if (c == char) count += 1;
     }
+    return count;
 }
 
 //click event for the buttonGrid
@@ -85,7 +86,7 @@ document.addEventListener('keypress', ev => {
     operations[ev.key].click();
 }, {passive : true});
 
-//special operations grid for = C
+//special operations grid
 const specialOperationsObject = document.querySelector('.special-operations');
 
 //object with all special operations with {el.textContent : el} key-values
@@ -174,6 +175,67 @@ function signAnalysis(str) {
     return str;
 }
 
+//returns the precedence of an operator
+function prec(c) {
+    if(c == '^')
+        return 3;
+    else if(c == '/' || c=='*')
+        return 2;
+    else if(c == '+' || c == '-')
+        return 1;
+    else
+        return -1;
+}
+
+function infixToPostfix(str) {
+    let stack = [];
+    let result = "";
+
+    for (let i = 0; i < str.length; i++) {
+        let c = str[i];
+
+        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
+            result += c;
+        } else if (c == '(') {
+            stack.push('(');
+        } else if (c == ')') {
+            while (stack[stack.length - 1] != '(') {
+                result += stack[stack.length - 1];
+                stack.pop();
+            }
+            stack.pop();
+        } else {
+            while (stack.length != 0 && prec(str[i]) <= prec(stack[stack.length - 1])) {
+                result += stack[stack.length - 1];
+                stack.pop();
+            }
+            stack.push(c);
+        }
+    }
+
+    while (stack.length != 0) {
+        result += stack[stack.length - 1];
+        stack.pop();
+    }
+    return result;
+}
+
+function postfixCalculation(str) {
+    let stack = [];
+
+    for (let i = 0; i < str.length; i++) {
+        let c = str[i];
+        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
+            stack.push(c);
+        } else {
+            let secondTerm = stack.pop();
+            let firstTerm = stack.pop();
+            stack.push(operationsFunctions.callOperation(firstTerm, secondTerm, c));
+        }
+    }
+    return stack.pop();
+}
+
 //calculates all paranthesis individually, then gets rid of the paranthesis and adds the result to the output string
 function calculateParanthesis(str) {
     while (str.indexOf(')') !== -1) {
@@ -195,15 +257,19 @@ function calculateParanthesis(str) {
 
 //evaluates and calculates the string
 function calculate(str) {
-    str = calculateParanthesis(str);
-    str = calculateOperation(str, '/');
-    str = calculateOperation(str, '*');
-    str = calculateOperation(str, '-');
-    str = calculateOperation(str, '+');
-    
+    // str = calculateParanthesis(str);
+    // str = calculateOperation(str, '/');
+    // str = calculateOperation(str, '*');
+    // str = calculateOperation(str, '-');
+    // str = calculateOperation(str, '+');
+    str = infixToPostfix(str);
+    console.log(str);
+    str = postfixCalculation(str);
     console.log(str);
     return str;
 }
+
+
 
 //OUTPUT.textContent is the string used to show the output
 let OUTPUT = document.getElementById('output');
