@@ -189,34 +189,43 @@ function prec(c) {
 
 function infixToPostfix(str) {
     let stack = [];
-    let result = "";
-
-    for (let i = 0; i < str.length; i++) {
+    let result = [];
+    let i = 0;
+    while (i < str.length) {
         let c = str[i];
 
-        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
-            result += c;
+        if (c >= '0' && c <= '9') {
+            let n = 0;
+            while (c >= '0' && c <= '9') {
+                n = n * 10 + +c;
+                i++;
+                c = str[i];
+            }
+            i--;
+            result.push(n);
         } else if (c == '(') {
             stack.push('(');
         } else if (c == ')') {
             while (stack[stack.length - 1] != '(') {
-                result += stack[stack.length - 1];
+                result.push(stack[stack.length - 1]);
                 stack.pop();
             }
             stack.pop();
         } else {
             while (stack.length != 0 && prec(str[i]) <= prec(stack[stack.length - 1])) {
-                result += stack[stack.length - 1];
+                result.push(stack[stack.length - 1]);
                 stack.pop();
             }
             stack.push(c);
         }
+        i++;
     }
 
     while (stack.length != 0) {
-        result += stack[stack.length - 1];
+        result.push(stack[stack.length - 1]);
         stack.pop();
     }
+    
     return result;
 }
 
@@ -225,7 +234,7 @@ function postfixCalculation(str) {
 
     for (let i = 0; i < str.length; i++) {
         let c = str[i];
-        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
+        if (!operations[c]) {
             stack.push(c);
         } else {
             let secondTerm = stack.pop();
