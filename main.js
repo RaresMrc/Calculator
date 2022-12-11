@@ -129,52 +129,6 @@ document.addEventListener('keydown', ev => {
     if (ev.code == 'Backspace') specialOperations['<-'].click();
 });
 
-//evaluates the string and calculates the given operation until there's none left
-function calculateOperation(str, operation) {
-    while (str.indexOf(operation, 1) !== -1) {
-        let opIndex = str.indexOf(operation, 1);
-        let opStart = 0;
-        let opEnd = str.length-1;
-        
-        for (let iterator = opIndex-1; iterator > 0; iterator--) {
-            if (operations[str[iterator]]) {
-                opStart = iterator + 1;
-                break;
-            }
-        }
-
-        for (let iterator = opIndex+1; iterator < str.length; iterator++) {
-            if (operations[str[iterator]]) {
-                opEnd = iterator - 1;
-                break;
-            }
-        }
-
-        let firstTerm = str.slice(opStart, opIndex);
-        let secondTerm = str.slice(opIndex+1, opEnd + 1);
-        let result = operationsFunctions.callOperation(firstTerm, secondTerm, operation);
-        console.log(`Operation: ${firstTerm} ${operation} ${secondTerm}; Result: ${result}`);
-        str = str.slice(0, opStart) + result + str.slice(opEnd + 1, str.length);
-        str = signAnalysis(str);
-        console.log(str);
-    }
-    return str;
-}
-
-//analyzes the string and changes signs where needed
-function signAnalysis(str) {
-    for (let index = 0; index < str.length - 1; index++) {
-        if ((str[index] == str[index+1]) && (str[index] == '-')) {
-            str = str.slice(0, index) + '+' + str.slice(index+2, str.length);
-        }
-
-        if ((str[index] == '+') && (str[index+1] == '-')) {
-            str = str.slice(0, index) + str.slice(index+1, str.length);
-        }
-    }
-    return str;
-}
-
 //returns the precedence of an operator
 function prec(c) {
     if(c == '^')
@@ -245,40 +199,14 @@ function postfixCalculation(str) {
     return stack.pop();
 }
 
-//calculates all paranthesis individually, then gets rid of the paranthesis and adds the result to the output string
-function calculateParanthesis(str) {
-    while (str.indexOf(')') !== -1) {
-        let paranthesisEnd = str.indexOf(')');
-        let paranthesisStart = 0;
-
-        for (let index = paranthesisEnd - 1; index > 0; index--) {
-            if (str[index] == '(') {
-                paranthesisStart = index;
-                break;
-            }
-        }
-
-        paranthesisResult = calculate(str.slice(paranthesisStart + 1, paranthesisEnd));
-        str = str.slice(0, paranthesisStart) + paranthesisResult + str.slice(paranthesisEnd + 1, str.length);
-    }
-    return str;
-}
-
 //evaluates and calculates the string
 function calculate(str) {
-    // str = calculateParanthesis(str);
-    // str = calculateOperation(str, '/');
-    // str = calculateOperation(str, '*');
-    // str = calculateOperation(str, '-');
-    // str = calculateOperation(str, '+');
     str = infixToPostfix(str);
     console.log(str);
     str = postfixCalculation(str);
     console.log(str);
     return str;
 }
-
-
 
 //OUTPUT.textContent is the string used to show the output
 let OUTPUT = document.getElementById('output');
