@@ -1,0 +1,120 @@
+body {
+    display: grid;
+    background: #171616;
+    justify-content: center;
+    gap: 10px 10px;
+}
+
+#output {
+    min-height: 20px;
+    color: white;
+    column: 1 / -1;
+}
+
+.grid-container {
+    display: inline-flex;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 170px;
+    height: 230px;
+    gap: 10px 10px;
+}
+
+.button-grid button {
+    border-width: 2px;
+    border-color: gray;
+    border-style: solid;
+    background: black;
+    border-radius: 100%;
+    color: whitesmoke;
+    font-size: 20px;
+}
+
+.button-grid :hover {
+    background: gray;
+    border-color: aquamarine;
+    font-size: 17px;
+}
+
+.button-grid :active {
+    font-size: 20px;
+}
+
+.operation-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    width: 50px;
+    height: 230px;
+    row-gap: 10px;
+    padding-left: 10px;
+    padding-top: 60px;
+}
+
+.operation-grid button {
+    border-width: 2px;
+    border-color: gray;
+    border-style: solid;
+    border-radius: 100%;
+    background: black;
+    color: greenyellow;
+    font-size: 20px;
+}
+
+.operation-grid :hover {
+    background: gray;
+    border-color: aquamarine;
+    font-size: 17px;
+}
+
+.operation-grid :active {
+    font-size: 20px;
+}
+
+.special-operations {
+    display : grid;
+    width: 170px;
+    height: 50px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px 10px;
+}
+
+.special-operations button {
+    border-width: 2px;
+    border-color: gray;
+    border-style: solid;
+    border-radius: 100%;
+    background: black;
+    color: greenyellow;
+    font-size: 20px;
+}
+
+.special-operations :hover {
+    background: gray;
+    border-color: aquamarine;
+    font-size: 17px;
+}
+
+.special-operations :active {
+    font-size: 20px;
+}
+
+.special-operations :first-child {
+    color: red;   
+}
+
+.special-operations :last-child {
+    background-color: green;
+    color: whitesmoke;
+}
+
+.calculator-grid {
+    display: grid;
+    width: 170px;
+    height: 290px;
+    justify-items: baseline;
+    row-gap: 10px;
+}
