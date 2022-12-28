@@ -16,6 +16,7 @@ buttonGrid.addEventListener('click', ev => {
 //keypress event, if the key pressed is in buttons, then simulate click event for respective key
 document.addEventListener('keypress', ev => {
     if (!buttons[ev.key]) return;
+    buttons[ev.key].focus();
     buttons[ev.key].click();
 }, {passive : true});
 
@@ -30,6 +31,7 @@ operationGrid.addEventListener('click', ev => {
 //keypress event, if the key pressed is in operations, then simulate click event for respective key
 document.addEventListener('keypress', ev => {
     if (!operations[ev.key]) return;
+    operations[ev.key].focus();
     operations[ev.key].click();
 }, {passive : true});
 
@@ -44,11 +46,15 @@ specialOperationsObject.addEventListener('click', ev => {
 //keypress event for the special operations, if the key pressed is in specialOperations, then simulate click event for respective key
 document.addEventListener('keypress', ev => {
     if (!specialOperations[ev.key]) return;
+    specialOperations[ev.key].focus();
     specialOperations[ev.key].click();
 }, {passive : true});
 
 document.addEventListener('keydown', ev => {
-    if (ev.code == 'Backspace') specialOperations['<-'].click();
+    if (ev.code == 'ArrowLeft') {
+        specialOperations['<-'].click();
+        specialOperations['<-'].focus();
+    }
 });
 
 //OUTPUT.textContent is the string used to show the output
